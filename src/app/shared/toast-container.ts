@@ -44,7 +44,7 @@ import { NotificationService } from '../core/services/notification.service';
       animation: slide 0.2s ease;
     }
     .toast--success {
-      --tone: var(--primary);
+      --tone: var(--success);
     }
     .toast--error {
       --tone: var(--danger);

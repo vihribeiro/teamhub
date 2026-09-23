@@ -13,7 +13,13 @@ import { Spinner } from '../../shared/spinner';
       <header class="page-header">
         <div>
           <h1>{{ isEdit() ? 'Editar colaborador' : 'Novo colaborador' }}</h1>
-          <p>{{ isEdit() ? 'Atualize os dados do colaborador.' : 'Preencha os dados do novo colaborador.' }}</p>
+          <p>
+            {{
+              isEdit()
+                ? 'Atualize os dados do colaborador.'
+                : 'Preencha os dados do novo colaborador.'
+            }}
+          </p>
         </div>
       </header>
 
@@ -87,8 +93,8 @@ import { Spinner } from '../../shared/spinner';
   `,
   styles: `
     .form {
-      padding: 1.5rem;
-      max-width: 620px;
+      padding: 1.75rem;
+      max-width: 640px;
     }
     .row {
       display: grid;

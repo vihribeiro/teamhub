@@ -22,16 +22,27 @@ import { Spinner } from '../../shared/spinner';
           <h1>Colaboradores</h1>
           <p>{{ total() }} colaboradores encontrados</p>
         </div>
-        <a class="btn btn-primary" routerLink="/colaboradores/novo">Novo colaborador</a>
+        <a class="btn btn-primary" routerLink="/colaboradores/novo">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Novo colaborador
+        </a>
       </header>
 
-      <div class="toolbar card">
-        <input
-          type="search"
-          class="input"
-          placeholder="Buscar por nome ou e-mail..."
-          [formControl]="searchControl"
-        />
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            type="search"
+            class="input"
+            placeholder="Buscar por nome ou e-mail..."
+            [formControl]="searchControl"
+          />
+        </label>
         <button type="button" class="btn btn-ghost" (click)="reload()">Atualizar</button>
       </div>
 
@@ -56,20 +67,24 @@ import { Spinner } from '../../shared/spinner';
         <section class="grid">
           @for (user of pageUsers(); track user.id) {
             <article class="user-card card">
-              <app-avatar [name]="fullName(user)" [src]="user.image" [size]="52" />
-              <div class="user-card__info">
-                <strong>{{ fullName(user) }}</strong>
-                <span>{{ user.email }}</span>
+              <div class="user-card__top">
+                <app-avatar [name]="fullName(user)" [src]="user.image" [size]="56" />
                 @if (user.company; as company) {
                   <app-badge tone="info">{{ company.department }}</app-badge>
                 }
               </div>
+
+              <div class="user-card__info">
+                <strong>{{ fullName(user) }}</strong>
+                <span>{{ user.email }}</span>
+              </div>
+
               <div class="user-card__actions">
                 <a class="btn btn-ghost btn-sm" [routerLink]="['/colaboradores', user.id]">Ver</a>
                 <a class="btn btn-ghost btn-sm" [routerLink]="['/colaboradores', user.id, 'editar']">
                   Editar
                 </a>
-                <button type="button" class="btn btn-danger btn-sm" (click)="confirmDelete(user)">
+                <button type="button" class="btn btn-danger-soft btn-sm" (click)="confirmDelete(user)">
                   Excluir
                 </button>
               </div>
@@ -118,11 +133,25 @@ import { Spinner } from '../../shared/spinner';
     .toolbar {
       display: flex;
       gap: 0.75rem;
-      padding: 1rem;
-      margin-bottom: 1.25rem;
+      align-items: center;
     }
-    .toolbar .input {
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       flex: 1;
+      color: var(--text-soft);
+    }
+    .search svg {
+      position: absolute;
+      left: 0.85rem;
+      pointer-events: none;
+    }
+    .search .input {
+      padding-left: 2.5rem;
+      border-radius: 999px;
+      background: var(--surface);
     }
     .state {
       display: flex;
@@ -143,18 +172,31 @@ import { Spinner } from '../../shared/spinner';
     .user-card {
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
-      padding: 1.25rem;
+      gap: 1rem;
+      padding: 1.3rem;
+      transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+    }
+    .user-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .user-card__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
     .user-card__info {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.3rem;
+      gap: 0.15rem;
       min-width: 0;
     }
     .user-card__info strong {
-      font-size: 1rem;
+      font-size: 1.02rem;
+      letter-spacing: -0.02em;
     }
     .user-card__info span {
       font-size: 0.83rem;
@@ -162,20 +204,20 @@ import { Spinner } from '../../shared/spinner';
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 100%;
     }
     .user-card__actions {
       display: flex;
       gap: 0.4rem;
       margin-top: auto;
       flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      padding-top: 0.9rem;
     }
     .pager {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-top: 1.25rem;
       flex-wrap: wrap;
     }
     .pager__info {
@@ -198,6 +240,14 @@ import { Spinner } from '../../shared/spinner';
       display: flex;
       justify-content: flex-end;
       gap: 0.6rem;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .user-card {
+        transition: none;
+      }
+      .user-card:hover {
+        transform: none;
+      }
     }
   `,
 })

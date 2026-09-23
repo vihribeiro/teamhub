@@ -9,11 +9,11 @@ export type BadgeTone = 'neutral' | 'success' | 'info' | 'warning' | 'danger';
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.6rem;
+      gap: 0.4rem;
+      padding: 0.22rem 0.62rem;
       border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.74rem;
+      font-weight: 700;
     }
     .badge::before {
       content: '';
@@ -27,12 +27,12 @@ export type BadgeTone = 'neutral' | 'success' | 'info' | 'warning' | 'danger';
       color: var(--text-muted);
     }
     .badge--success {
-      background: var(--primary-soft);
-      color: var(--primary-dark);
+      background: var(--success-soft);
+      color: var(--success);
     }
     .badge--info {
-      background: var(--info-soft);
-      color: var(--info);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
     }
     .badge--warning {
       background: var(--warning-soft);

@@ -36,24 +36,25 @@ import { Component, input, output } from '@angular/core';
       place-items: center;
       padding: 1rem;
       background: var(--overlay);
+      backdrop-filter: blur(2px);
       animation: fade 0.15s ease;
     }
     .modal {
       width: 100%;
-      max-width: 440px;
+      max-width: 460px;
       max-height: 90vh;
       overflow: auto;
       background: var(--surface);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
-      animation: pop 0.18s ease;
+      animation: pop 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .modal__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1.1rem 1.25rem;
+      padding: 1.15rem 1.35rem;
       border-bottom: 1px solid var(--border);
     }
     .modal__header h3 {
@@ -61,7 +62,7 @@ import { Component, input, output } from '@angular/core';
       font-size: 1.05rem;
     }
     .modal__body {
-      padding: 1.25rem;
+      padding: 1.35rem;
     }
     .icon-btn {
       display: grid;
@@ -69,10 +70,11 @@ import { Component, input, output } from '@angular/core';
       width: 32px;
       height: 32px;
       border: none;
-      border-radius: 8px;
+      border-radius: 999px;
       background: transparent;
       color: var(--text-muted);
       cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
     }
     .icon-btn:hover {
       background: var(--surface-2);
@@ -86,7 +88,13 @@ import { Component, input, output } from '@angular/core';
     @keyframes pop {
       from {
         opacity: 0;
-        transform: translateY(8px) scale(0.98);
+        transform: translateY(10px) scale(0.98);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .backdrop,
+      .modal {
+        animation: none;
       }
     }
   `,

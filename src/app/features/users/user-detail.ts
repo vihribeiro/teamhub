@@ -10,7 +10,12 @@ import { Spinner } from '../../shared/spinner';
   imports: [RouterLink, Avatar, Badge, Spinner],
   template: `
     <div class="page">
-      <a class="back" routerLink="/colaboradores">&larr; Voltar</a>
+      <a class="back" routerLink="/colaboradores">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        Voltar
+      </a>
 
       @if (loading()) {
         <div class="state card">
@@ -20,8 +25,8 @@ import { Spinner } from '../../shared/spinner';
       } @else if (user(); as person) {
         <article class="card profile">
           <header class="profile__header">
-            <app-avatar [name]="person.firstName + ' ' + person.lastName" [src]="person.image" [size]="80" />
-            <div>
+            <app-avatar [name]="person.firstName + ' ' + person.lastName" [src]="person.image" [size]="88" />
+            <div class="profile__id">
               <h1>{{ person.firstName }} {{ person.lastName }}</h1>
               <p>{{ person.email }}</p>
               @if (person.company; as company) {
@@ -71,14 +76,18 @@ import { Spinner } from '../../shared/spinner';
   `,
   styles: `
     .back {
-      display: inline-block;
-      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      align-self: flex-start;
       font-size: 0.88rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-decoration: none;
+      transition: color 0.15s ease;
     }
     .back:hover {
-      color: var(--text);
+      color: var(--primary);
     }
     .state {
       display: flex;
@@ -88,24 +97,29 @@ import { Spinner } from '../../shared/spinner';
       color: var(--text-muted);
     }
     .profile {
-      padding: 1.75rem;
+      padding: 2rem;
     }
     .profile__header {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1.35rem;
       flex-wrap: wrap;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
     }
-    .profile__header h1 {
+    .profile__id {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+      min-width: 0;
+    }
+    .profile__id h1 {
+      font-size: 1.6rem;
+      letter-spacing: -0.03em;
+    }
+    .profile__id p {
       margin: 0;
-      font-size: 1.5rem;
-    }
-    .profile__header p {
-      margin: 0.25rem 0 0.6rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
     .profile__header .btn {
       margin-left: auto;
@@ -113,19 +127,24 @@ import { Spinner } from '../../shared/spinner';
     .profile__grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.25rem;
-      margin: 1.5rem 0 0;
+      gap: 0.85rem;
+      margin: 1.75rem 0 0;
+    }
+    .profile__grid > div {
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
     }
     .profile__grid dt {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.07em;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 800;
     }
     .profile__grid dd {
-      margin: 0.3rem 0 0;
-      font-weight: 600;
+      margin: 0.35rem 0 0;
+      font-weight: 700;
       text-transform: capitalize;
     }
   `,

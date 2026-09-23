@@ -5,7 +5,9 @@ import { Component, computed, input, signal } from '@angular/core';
   host: {
     '[style.width.px]': 'size()',
     '[style.height.px]': 'size()',
-    '[style.font-size.px]': 'size() * 0.38',
+    '[style.font-size.px]': 'size() * 0.36',
+    '[style.background]': 'background()',
+    '[style.color]': 'foreground()',
   },
   template: `
     @if (showImage()) {
@@ -20,9 +22,7 @@ import { Component, computed, input, signal } from '@angular/core';
       place-items: center;
       border-radius: 50%;
       overflow: hidden;
-      background: var(--primary-soft);
-      color: var(--primary-dark);
-      font-weight: 700;
+      font-weight: 800;
       flex-shrink: 0;
       user-select: none;
     }
@@ -51,6 +51,18 @@ export class Avatar {
       .map((part) => part.charAt(0).toUpperCase())
       .join(''),
   );
+
+  private readonly hue = computed(() => {
+    const name = this.name() || '?';
+    let hash = 0;
+    for (let index = 0; index < name.length; index++) {
+      hash = (hash * 31 + name.charCodeAt(index)) % 360;
+    }
+    return hash;
+  });
+
+  protected readonly background = computed(() => `hsl(${this.hue()} 72% 93%)`);
+  protected readonly foreground = computed(() => `hsl(${this.hue()} 55% 36%)`);
 
   protected onError(): void {
     this.failed.set(true);

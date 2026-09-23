@@ -11,21 +11,38 @@ import { Spinner } from '../../shared/spinner';
     <div class="login">
       <section class="login__aside">
         <div class="brand">
-          <span class="brand__mark">T</span>
           <strong>TeamHub</strong>
+          <span>Gestão de colaboradores</span>
         </div>
+
         <div class="pitch">
-          <h1>Gestão de colaboradores, simples e centralizada.</h1>
+          <h1>Todas as pessoas da sua equipe em um só lugar.</h1>
           <p>
-            Consome a API pública <strong>DummyJSON</strong> para autenticação e dados de
-            colaboradores, com CRUD, busca e paginação.
+            Autenticação real, busca, paginação e CRUD consumindo a API pública
+            <strong>DummyJSON</strong>.
           </p>
           <ul>
-            <li>Autenticação JWT com interceptor</li>
-            <li>Consumo de API REST</li>
-            <li>Deploy automatizado (GitHub Actions)</li>
+            <li>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Autenticação JWT com interceptor
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Consumo de API REST
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Testes e deploy automatizado (CI/CD)
+            </li>
           </ul>
         </div>
+
         <span class="foot">Projeto de portfólio · Angular + TypeScript</span>
       </section>
 
@@ -86,42 +103,63 @@ import { Spinner } from '../../shared/spinner';
   styles: `
     .login {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1.05fr 1fr;
       min-height: 100vh;
     }
     .login__aside {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 2rem;
-      padding: 2.5rem;
-      background: linear-gradient(160deg, #0f1b2d 0%, #17253c 100%);
+      padding: 2.75rem;
+      overflow: hidden;
       color: #fff;
+      background: linear-gradient(155deg, #312e81 0%, #4f46e5 55%, #6366f1 100%);
+    }
+    .login__aside::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.16) 0, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size:
+        auto,
+        46px 46px,
+        46px 46px;
+      mask-image: radial-gradient(90% 70% at 30% 20%, #000 0%, transparent 80%);
+      pointer-events: none;
     }
     .brand {
+      position: relative;
       display: flex;
-      align-items: center;
-      gap: 0.7rem;
+      flex-direction: column;
+      line-height: 1.2;
     }
-    .brand__mark {
-      display: grid;
-      place-items: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--primary);
-      font-weight: 800;
+    .brand strong {
+      font-size: 1.3rem;
+      letter-spacing: -0.03em;
+    }
+    .brand span {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+    .pitch {
+      position: relative;
     }
     .pitch h1 {
-      font-size: 2rem;
-      line-height: 1.15;
-      max-width: 22ch;
+      font-size: 2.15rem;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      max-width: 20ch;
       margin: 0;
     }
     .pitch p {
-      color: #93a1b8;
+      color: rgba(255, 255, 255, 0.82);
       max-width: 42ch;
-      margin: 1rem 0 1.5rem;
+      margin: 1rem 0 1.6rem;
     }
     .pitch ul {
       list-style: none;
@@ -129,15 +167,22 @@ import { Spinner } from '../../shared/spinner';
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 0.75rem;
     }
     .pitch li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       font-size: 0.92rem;
-      color: #d7deea;
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .pitch li svg {
+      flex-shrink: 0;
     }
     .foot {
+      position: relative;
       font-size: 0.78rem;
-      color: #93a1b8;
+      color: rgba(255, 255, 255, 0.7);
     }
     .login__panel {
       display: grid;
@@ -147,19 +192,20 @@ import { Spinner } from '../../shared/spinner';
     }
     .form {
       width: 100%;
-      max-width: 380px;
+      max-width: 390px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 2.25rem;
+      animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     .form header {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
     }
     .form h2 {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
     }
     .form header p {
       margin: 0.35rem 0 0;
@@ -169,8 +215,8 @@ import { Spinner } from '../../shared/spinner';
     .form__error {
       background: var(--danger-soft);
       color: var(--danger);
-      border-radius: 8px;
-      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.8rem;
       font-size: 0.85rem;
       margin: 0 0 1rem;
     }
@@ -187,7 +233,18 @@ import { Spinner } from '../../shared/spinner';
     code {
       background: var(--surface-2);
       padding: 0.1rem 0.35rem;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
     @media (max-width: 860px) {
       .login {
@@ -195,6 +252,11 @@ import { Spinner } from '../../shared/spinner';
       }
       .login__aside {
         display: none;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .form {
+        animation: none;
       }
     }
   `,
