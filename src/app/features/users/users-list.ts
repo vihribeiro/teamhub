@@ -149,9 +149,10 @@ import { Spinner } from '../../shared/spinner';
       pointer-events: none;
     }
     .search .input {
-      padding-left: 2.5rem;
+      padding: 0.85rem 1rem 0.85rem 2.6rem;
       border-radius: 999px;
       background: var(--surface);
+      box-shadow: var(--shadow-xs);
     }
     .state {
       display: flex;
@@ -166,7 +167,7 @@ import { Spinner } from '../../shared/spinner';
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1rem;
     }
     .user-card {

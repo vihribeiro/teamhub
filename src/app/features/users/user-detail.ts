@@ -2,12 +2,11 @@ import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../core/services/users.service';
 import { Avatar } from '../../shared/avatar';
-import { Badge } from '../../shared/badge';
 import { Spinner } from '../../shared/spinner';
 
 @Component({
   selector: 'app-user-detail',
-  imports: [RouterLink, Avatar, Badge, Spinner],
+  imports: [RouterLink, Avatar, Spinner],
   template: `
     <div class="page">
       <a class="back" routerLink="/colaboradores">
@@ -23,51 +22,53 @@ import { Spinner } from '../../shared/spinner';
           Carregando colaborador...
         </div>
       } @else if (user(); as person) {
-        <article class="card profile">
-          <header class="profile__header">
-            <app-avatar [name]="person.firstName + ' ' + person.lastName" [src]="person.image" [size]="88" />
+        <article class="profile card">
+          <header class="profile__hero">
+            <app-avatar [name]="person.firstName + ' ' + person.lastName" [src]="person.image" [size]="92" />
             <div class="profile__id">
               <h1>{{ person.firstName }} {{ person.lastName }}</h1>
               <p>{{ person.email }}</p>
               @if (person.company; as company) {
-                <app-badge tone="info">{{ company.title }}</app-badge>
+                <span class="profile__role">{{ company.title }}</span>
               }
             </div>
-            <a class="btn btn-primary" [routerLink]="['/colaboradores', person.id, 'editar']">Editar</a>
+            <a class="btn profile__edit" [routerLink]="['/colaboradores', person.id, 'editar']">Editar</a>
           </header>
 
-          <dl class="profile__grid">
-            <div>
-              <dt>Telefone</dt>
-              <dd>{{ person.phone }}</dd>
-            </div>
-            @if (person.age) {
+          <div class="profile__body">
+            <dl class="profile__grid">
               <div>
-                <dt>Idade</dt>
-                <dd>{{ person.age }} anos</dd>
+                <dt>Telefone</dt>
+                <dd>{{ person.phone }}</dd>
               </div>
-            }
-            @if (person.gender) {
-              <div>
-                <dt>Gênero</dt>
-                <dd>{{ person.gender }}</dd>
-              </div>
-            }
-            @if (person.company; as company) {
-              <div>
-                <dt>Empresa</dt>
-                <dd>{{ company.name }}</dd>
-              </div>
-              <div>
-                <dt>Departamento</dt>
-                <dd>{{ company.department }}</dd>
-              </div>
-              <div>
-                <dt>Cargo</dt>
-                <dd>{{ company.title }}</dd>
-              </div>
-            }
-          </dl>
+              @if (person.age) {
+                <div>
+                  <dt>Idade</dt>
+                  <dd>{{ person.age }} anos</dd>
+                </div>
+              }
+              @if (person.gender) {
+                <div>
+                  <dt>Gênero</dt>
+                  <dd>{{ person.gender }}</dd>
+                </div>
+              }
+              @if (person.company; as company) {
+                <div>
+                  <dt>Empresa</dt>
+                  <dd>{{ company.name }}</dd>
+                </div>
+                <div>
+                  <dt>Departamento</dt>
+                  <dd>{{ company.department }}</dd>
+                </div>
+                <div>
+                  <dt>Cargo</dt>
+                  <dd>{{ company.title }}</dd>
+                </div>
+              }
+            </dl>
+          </div>
         </article>
       } @else {
         <div class="card state">Colaborador não encontrado.</div>
@@ -97,38 +98,64 @@ import { Spinner } from '../../shared/spinner';
       color: var(--text-muted);
     }
     .profile {
-      padding: 2rem;
+      overflow: hidden;
+      padding: 0;
     }
-    .profile__header {
+    .profile__hero {
       display: flex;
       align-items: center;
       gap: 1.35rem;
       flex-wrap: wrap;
+      padding: 2.25rem 2rem;
+      color: #fff;
+      background: linear-gradient(135deg, #312e81 0%, #4f46e5 58%, #6366f1 100%);
+    }
+    .profile__hero app-avatar {
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
     }
     .profile__id {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.35rem;
+      gap: 0.3rem;
       min-width: 0;
     }
     .profile__id h1 {
-      font-size: 1.6rem;
+      color: #fff;
+      font-size: 1.7rem;
       letter-spacing: -0.03em;
     }
     .profile__id p {
       margin: 0;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.82);
       font-size: 0.92rem;
     }
-    .profile__header .btn {
+    .profile__role {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(255, 255, 255, 0.16);
+      padding: 0.24rem 0.62rem;
+      border-radius: 999px;
+    }
+    .profile__edit {
       margin-left: auto;
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+    .profile__edit:hover {
+      background: rgba(255, 255, 255, 0.26);
+    }
+    .profile__body {
+      padding: 1.75rem 2rem 2rem;
     }
     .profile__grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 0.85rem;
-      margin: 1.75rem 0 0;
+      margin: 0;
     }
     .profile__grid > div {
       background: var(--surface-2);
