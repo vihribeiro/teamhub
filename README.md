@@ -1,59 +1,70 @@
-# Teamhub
+# TeamHub — Gestão de Colaboradores
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Aplicação **Angular** que consome a API REST pública [DummyJSON](https://dummyjson.com):
+autenticação JWT, listagem de colaboradores com busca e paginação, detalhe e CRUD completo.
+Inclui **testes unitários** e **CI/CD com deploy automático no GitHub Pages**.
 
-## Development server
+Projeto de portfólio focado em integração com APIs REST, qualidade e automação.
 
-To start a local development server, run:
+## Funcionalidades
 
-```bash
-ng serve
+- **Login** com autenticação real (`POST /auth/login`), guarda de rota e retorno à URL de origem.
+- **Interceptor de autenticação**: injeta o `Bearer token` nas requisições à API.
+- **Interceptor de erro**: captura falhas HTTP e exibe notificações globais (toasts).
+- **Colaboradores**: busca com _debounce_, paginação e estados de carregando/vazio/erro.
+- **Detalhe** por rota (`/colaboradores/:id`) com dados de contato e empresa.
+- **CRUD**: criar, editar e excluir (com confirmação), refletindo na lista.
+- **Camada de estado** com signals e sobreposição local persistida em `localStorage`
+  (a API de demonstração não persiste escritas — o app mantém as alterações localmente).
+- **Layout responsivo** com sidebar retrátil.
+
+> Credenciais de demonstração: `emilys` / `emilyspass`
+
+## Stack
+
+- **Angular 22** (standalone, signals, `@if`/`@for`, `input()`/`output()`)
+- **TypeScript** · **RxJS** · **Reactive Forms**
+- **HttpClient** com interceptors funcionais
+- **Vitest** para testes
+- **GitHub Actions** para CI e deploy no GitHub Pages
+
+## Arquitetura
+
+```
+src/app
+├── core
+│   ├── guards/          # authGuard
+│   ├── interceptors/    # authInterceptor, errorInterceptor
+│   ├── models/          # User, Session...
+│   └── services/        # AuthService, UsersService, NotificationService
+├── features
+│   ├── login/
+│   └── users/           # users-list, user-detail, user-form
+├── layout/              # shell (sidebar + topbar)
+└── shared/              # avatar, badge, modal, spinner, empty-state, toast
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+A URL da API é configurável via `src/environments/environment.ts` e
+`environment.production.ts` (troca automática no build de produção).
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Como rodar
 
 ```bash
-ng generate --help
+npm install
+npm start          # http://localhost:4200
+npm run build      # build de produção
+npx ng test --watch=false
 ```
 
-## Building
+## CI/CD
 
-To build the project run:
+- `.github/workflows/ci.yml`: roda testes e build em pull requests.
+- `.github/workflows/deploy.yml`: em push para `main`, roda testes, faz o build com o
+  `base-href` do repositório e publica no **GitHub Pages** (com `404.html` para rotas SPA).
 
-```bash
-ng build
-```
+Para habilitar: em **Settings → Pages**, selecione a origem **GitHub Actions**.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Autor
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Vinícius Santos Ribeiro** — Desenvolvedor Frontend
+[Portfólio](https://viniciusribeiro.dev.br) · [GitHub](https://github.com/vihribeiro)
